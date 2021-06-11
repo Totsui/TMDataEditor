@@ -62,4 +62,4 @@ Here is what I plan to add in the future
 Special thanks to @Rogero Nadalito and Baraski and all the others from the [Tennis Manager 2021 Discord](https://discord.com/invite/fenRf7nTKc)
 
 ## Download
-You can download the windows executable [here](https://www.mediafire.com/file/jozgbrf24ehwbbi/TMDataEditorv0.2.zip/file)
+You can download the windows executable [here](https://www.mediafire.com/file/lxqmr7bjdpqocgx/TMDataEditorv0.3.zip/file)
