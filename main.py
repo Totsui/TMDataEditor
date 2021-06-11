@@ -31,8 +31,6 @@ def massCopy(directory,destination):
 
 def insertIntoDB(filenameCSV,location,query,dataArr):
     dataCSV = csv.reader(open(filenameCSV,encoding='UTF-8'),delimiter=",")
-    if(filenameCSV=="realPlayers.csv"):
-        next(dataCSV)
     con = sqlite3.connect(location)
     cursor = con.cursor()
     for row in dataCSV:
@@ -76,32 +74,60 @@ if(cfg["scriptSettings"].getboolean("downloadFiles")):
             filename = "realTournaments.csv"
         else:
             filename =cfg["downloadURL"][link].split("/")[-1]
-            
-        if(cfg["downloadURL"][link].endswith("zip")):
-            urllib.request.urlretrieve(cfg["downloadURL"][link],filename,show_progress)
-            print("Extracting zip")
-            with zipfile.ZipFile(filename,"r") as myZip:
-                myZip.extractall("Content/")
-            os.remove(filename)
-        else:
-            urllib.request.urlretrieve(cfg["downloadURL"][link],filename)
+        try:
+            if(cfg["downloadURL"][link].endswith("zip")):
+                urllib.request.urlretrieve(cfg["downloadURL"][link],filename,show_progress)
+                print("Extracting zip")
+                with zipfile.ZipFile(filename,"r") as myZip:
+                    myZip.extractall("Content/")
+                os.remove(filename)
+            else:
+                urllib.request.urlretrieve(cfg["downloadURL"][link],filename)
+        except:
+            print("Unable to download "+filename+" check if link is broken")
+if(cfg["scriptSettings"].getboolean("useCommunityFiles")):
+    print("Installing Community Files")
+    for item in cfg["scriptSettings"]:
+        if(item.startswith("change")):
+            if(cfg["scriptSettings"].getboolean(item)):
+                filename= item.replace("change","")
 
-for item in cfg["scriptSettings"]:
-    if(item.startswith("change")):
-        if(cfg["scriptSettings"].getboolean(item)):
-            filename= item.replace("change","")
+                if(os.path.isdir("Content/"+filename)):
+                    print("Copying "+filename+" to game folder")
+                    massCopy("Content/"+filename,cfg["yourGameSettings"]["gameFolderLocation"]+"/Content/"+filename)
+                    print("Done")
+                print("real"+filename+".csv")
+                if(os.path.isfile("real"+filename+".csv")):
+                    print("Inserting "+filename.capitalize()+" into DB")
+                    query = cfg["queries"][filename]
+                    data = json.loads(cfg.get("queries",filename+"Data"))
+                    insertIntoDB("real"+filename+".csv",cfg["yourGameSettings"]["gameFolderLocation"]+"\Configs\DefaultConfig.db",query,data)
+                    if(cfg["scriptSettings"].getboolean("editSave")):
+                        print("Inserting "+filename.capitalize()+" into  Save DB")
+                        insertIntoDB("real"+filename+".csv",cfg["yourGameSettings"]["saveFolderLocation"]+"\save.db",query,data)
+if(cfg["scriptSettings"].getboolean("useMyFiles")):
+    print("Installing your own files")
+    for item in cfg["scriptSettings"]:
+        if(item.startswith("change")):
+            if(cfg["scriptSettings"].getboolean(item)):
+                filename= item.replace("change","")
 
-            if(os.path.isdir("Content/"+filename)):
-                print("Copying "+filename+" to game folder")
-                massCopy("Content/"+filename,cfg["yourGameSettings"]["gameFolderLocation"]+"/Content/"+filename)
-                print("Done")
-            print("real"+filename+".csv")
-            if(os.path.isfile("real"+filename+".csv")):
-                print("Inserting "+filename.capitalize()+" into DB")
-                query = cfg["queries"][filename]
-                data = json.loads(cfg.get("queries",filename+"Data"))
-                insertIntoDB("real"+filename+".csv",cfg["yourGameSettings"]["gameFolderLocation"]+"\Configs\DefaultConfig.db",query,data)
-print("Saved into Database")
+                if(os.path.isdir("myContent/"+filename)):
+                    if(os.listdir("myContent/"+filename)):
+                        print("Copying "+filename+" to game folder")
+                        massCopy("myContent/"+filename,cfg["yourGameSettings"]["gameFolderLocation"]+"/Content/"+filename)
+                        print("Done")
+
+                if(os.path.isfile("myContent/CSV/real"+filename+".csv")):
+                    print("Inserting "+filename.capitalize()+" into DB")
+                    query = cfg["queries"][filename]
+                    data = json.loads(cfg.get("queries",filename+"Data"))
+                    insertIntoDB("myContent/CSV/real"+filename+".csv",cfg["yourGameSettings"]["gameFolderLocation"]+"\Configs\DefaultConfig.db",query,data)
+                    if(cfg["scriptSettings"].getboolean("editSave")):
+                        print("Inserting "+filename.capitalize()+" into  Save DB")
+                        insertIntoDB("myContent/CSV/real"+filename+".csv",cfg["yourGameSettings"]["saveFolderLocation"]+"\save.db",query,data)
+                    
+    print("Saved into Database")
 print("All Done")
 print("Exit in 30...")
 sleep(30)
