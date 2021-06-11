@@ -57,5 +57,4 @@ Here is what I plan to add in the future
 * []() Create simple site where we all can edit the CSVs.
 * []() NewPlayer Creation (be your manager and the player at the same time KAPPA)
 
-Special thanks to @Rogero Nadalito and Baraski and all the others from the [Tennis Manager 2021 Discord]
-[Tennis Manager 2021 Discord]: https://discord.com/invite/fenRf7nTKc
+Special thanks to @Rogero Nadalito and Baraski and all the others from the [Tennis Manager 2021 Discord](https://discord.com/invite/fenRf7nTKc)
