@@ -15,6 +15,7 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#notes">Notes</a></li>
+    <li><a href="#download">Download Win Executable</a></li>
   </ol>
 </details>
 
@@ -59,3 +60,6 @@ Here is what I plan to add in the future
 * []() NewPlayer Creation (be your manager and the player at the same time KAPPA)
 
 Special thanks to @Rogero Nadalito and Baraski and all the others from the [Tennis Manager 2021 Discord](https://discord.com/invite/fenRf7nTKc)
+
+## Download
+You can download the windows executable [here](https://www.mediafire.com/file/jozgbrf24ehwbbi/TMDataEditorv0.2.zip/file)
