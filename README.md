@@ -43,9 +43,10 @@ Here is the python version i used and package you'll need to download with pip
 
 ## Usage
 
-1. Open config.cfg and put the correct gameFolderLocation and saveFolderLocation
-2. Leave changePlayerImage to True if you wanna change the player images
+1. Open config.cfg and put the correct gameFolderLocation
+2. Leave changePlayers to True if you wanna change the player images + name in the DB, same for the other changes...
 3. Leave to downloadFiles to true if you wanna download up to date tournaments, players etc...
+5. Don't touch other configs please c:
 4. Run main.py
 
 
